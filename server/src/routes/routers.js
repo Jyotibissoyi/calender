@@ -15,8 +15,8 @@ const{createEvent, getByid, getEvent,updateEvent, deleteEvent}= require("../cont
 
 
 
-// router.post("/create",authentication,authorization,checkuserId, createEvent )
-// router.get("/getevent", authentication,authorization,checkuserId, getEvent )
+router.post("/create", createEvent )
+ router.get("/getevent", getEvent )
 // router.get("/getevent/:id",authentication,authorization,checkuserId, getByid)
 // router.put("/update/:id",authentication,authorization,checkuserId, updateEvent) 
 // router.delete("/delete/:id",authentication,authorization,checkuserId, deleteEvent)

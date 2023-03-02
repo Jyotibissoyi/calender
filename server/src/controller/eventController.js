@@ -7,38 +7,31 @@ const moment = require("moment")
 
 
 //router.post("/", 
-const createEvent = async(req, res)=>{
-     
-    try{
-       const newEvent = await new Event(req.body)
-       await newEvent.save((err, event)=>{
-            if(err){
-                handleError(err, res)
-            }else{
-                res.status(200).json(event)
-            }
-        })
-    }catch (error) {
-        return res.status(500).send({ msg: error.message });
-      }
-}
+const createEvent = async (req, res) => {
 
+
+    try {
+        const data = req.body
+
+        const createData = await Event.create(data)
+
+        return res.status(200).send({ data: createData })
+    } catch (error) {
+        console.log(error.message)
+        return res.status(500).send({ msg: error.message });
+    }
+}
 
 
 //router.get("/", 
 const getEvent = async(req, res)=>{
     try{
-        const events = await Event.find({
-            start:{$gte: moment(req.query.start).toDate()},
-            start:{$lte: moment(req.query.start).toDate()}
-     });
+        const data = await Event.find();
  
-       res.status(200).json(events)
-
-      
-    }catch(err){
-        handleError(err, res)
-    }
+     return res.status(200).send({ data: data })
+    }catch (error) {
+        return res.status(500).send({ msg: error.message });
+      }
 };
 
 //router.get("/:id/show", 
