@@ -1,0 +1,51 @@
+const jwt = require("jsonwebtoken");
+const userModel = require("../models/userModel");
+//<-------------------------------------< Authentication >------------------------------------->//
+const authentication = async function (req, res, next) {
+  try {
+    let bearerHeader = req.headers.authorization;
+    let userId = req.params.userId;
+    if (typeof bearerHeader == "undefined")
+      return res.status(400).send({ 
+        status: false,
+        message: "Token is missing, please enter a token",
+      });
+
+    let bearerToken = bearerHeader.split(" ");
+
+    let token = bearerToken[1];
+    let decode = jwt.verify(token, "CALENDER");
+    req.userId = decode.userId;
+    next();
+  } catch (error) {
+    return res.status(500).send({ msg: error.message });
+  }
+};
+
+const authorization = async function (req, res, next) {
+  try {
+    let userId = req.params.userId;
+    if (userId == req.userId) return next();
+    else
+      return res
+        .status(403)
+        .send({ status: false, msg: "CALENDER" });
+  } catch (error) {
+    return res.status(500).send({ msg: error.message });
+  }
+};
+const checkuserId = async function (req, res, next) {
+  try {
+    let userId = req.params.userId;
+    let validuser = await userModel.findById(userId)
+    if(validuser == null)
+    {
+     return res.status(404).send({ status : false , msg : "user id not found in Database"})
+    }
+    next()
+  } catch (error) {
+    return res.status(500).send({ msg: error.message });
+  }
+};
+//<------------------------------< Exports : router >----------------------------------------->//
+module.exports = { authentication, authorization,checkuserId };
