@@ -37,7 +37,7 @@ const createUser = async function (req, res) {
 
 //------------------------------------------------------------Login Api-------------------------------------------------------------------------------
 
-const loginUser = async function (req, res) {
+const logInUserData = async function (req, res) {
   try {
       let { email, password } = req.body;
 
@@ -95,4 +95,4 @@ const getUser = async function(req, res)  {
 //-------------------------------------------------------Update User Api----------------------------------------------------------------------------
 
 
-module.exports = { createUser, loginUser, getUser }
+module.exports = { createUser, logInUserData, getUser }

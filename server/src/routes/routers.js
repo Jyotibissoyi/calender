@@ -9,14 +9,14 @@ const{createEvent, getByid, getEvent,updateEvent, deleteEvent}= require("../cont
 
 //---------------------------------< Routes >----------------------------------//
 
-// router.post("/register", createUser);
-// router.post("/login", logInUserData);
+router.post("/register", createUser);
+router.post("/login", logInUserData);
 // router.get("/user/:userId/profile", authentication,authorization,checkuserId, getUserData);
 
 
-
+ 
 router.post("/create", createEvent )
- router.get("/getevent", getEvent )
+router.get("/getevent", getEvent )
 // router.get("/getevent/:id",authentication,authorization,checkuserId, getByid)
 // router.put("/update/:id",authentication,authorization,checkuserId, updateEvent) 
 // router.delete("/delete/:id",authentication,authorization,checkuserId, deleteEvent)
