@@ -26,7 +26,7 @@ const createEvent = async (req, res) => {
 //router.get("/", 
 const getEvent = async(req, res)=>{
     try{
-        const data = await Event.find();
+        const data = await Event.find({isDeleted: false});
  
      return res.status(200).send({ data: data })
     }catch (error) {
@@ -75,17 +75,61 @@ const updateEvent= async (req, res)=>{
  }
 
 //router.delete("/:id/delete",
-const deleteEvent = async(req, res)=>{
+// const deleteEvent = async(req, res)=>{
 
-    try{
-        const id = req.params.id;
-        await Event.findByIdAndRemove(id)
-        res.status(200).json("Event has been deleted");
-    }catch (error) {
-        return res.status(500).send({ msg: error.message });
-      }
+//     try{
+//         const id = req.params.id;
+//         await Event.findByIdAndRemove(id)
+//         res.status(200).json("Event has been deleted");
+//     }catch (error) {
+//         return res.status(500).send({ msg: error.message });
+//       }
 
-}
+// }
+const deleteEvent = async (req, res) => {
+    try {
+      const id = req.params.id;
+      await Event.findOneAndUpdate(
+        { _id: id, isDeleted: false },
+        { $set: { isDeleted: true } },
+        { new: true }
+      );//(id, { isDelete: true });
+      res.status(200).json('Event has been marked as deleted');
+    } catch (error) {
+      return res.status(500).send({ msg: error.message });
+    }
+  };
+
+//   try {
+//     let productId = req.params.productId;
+//     if (!validation.isValidObjectId(productId)) {
+//       return res
+//         .status(400)
+//         .send({ status: false, msg: "Please Provide Valid Project ID" });
+//     }
+//     let alreadyDeleted = await ProductsModel.findOne({
+//       _id: productId,
+//     });
+//     if(alreadyDeleted == null)
+//     {
+//       return res
+//       .status(404)
+//       .send({ status: false, msg: "this productId is not exist in Database" });
+//     }
+//     if (alreadyDeleted['isDeleted'] == true) {
+//       return res
+//         .status(404)
+//         .send({ status: false, msg: "this product is already deleted" });
+//     }
+//     let data = await ProductsModel.findOneAndUpdate(
+//       { _id: productId, isDeleted: false },
+//       { $set: { isDeleted: true } },
+//       { new: true }
+//     );
+//     return res
+//       .status(200)
+//       .send({ status: true, data: "product deleted Succesfully" });
+  
 
 
 

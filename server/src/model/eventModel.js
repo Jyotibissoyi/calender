@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const EventSchema = new mongoose.Schema({
     title: {type: String, required: [true, "Please write a title for your event"]},
+    isDeleted: { type: Boolean, default: false },
     userId:{
       type: mongoose.Schema.Types.ObjectId,
       ref: "user"
